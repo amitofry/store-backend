@@ -10,14 +10,20 @@ class LoginManager {
         const loggedUser = users.find((user)=>{
             return user.userName === userName && user.password === password;
         })
-
         return loggedUser !== undefined;
     }
 
-    signUp(userDetails) {
-        // write to db.
-        // save.
-        // return userDetails
+    signUp(userName, password, passwordRetype) {
+        let db = this.dbManager.getDatabaseObject();
+        //check if he is logged in already
+        db.users[db.users.length] = {
+            userName,
+            password
+        }
+        this.dbManager.writeDataObjectToDatabase(db)
+
+        return true;
+
     }
     
     deleteUser() {        

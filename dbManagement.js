@@ -2,7 +2,8 @@ const fs = require('fs');
 
 class DbManager {    
     constructor(dbFilePath) {
-        this.dbFilePath = dbFilePath;        
+        this.dbFilePath = dbFilePath;
+        this.readDatabaseFile = this.readDatabaseFile.bind(this)
     }
 
     readDatabaseFile(dbFilePath) {        
@@ -15,8 +16,13 @@ class DbManager {
         return this.readDatabaseFile(this.dbFilePath);        
     }
 
-    writeDataObjectToDatabase(dbObject) {
-        // ... save to dbFile.
+    writeDataObjectToDatabase(dbObject){
+        return this.updateDataBase(dbObject,this.dbFilePath)
+    }
+
+    updateDataBase(dbObject,dbFilePath) {
+        const data = fs.writeFileSync(dbFilePath,JSON.stringify(dbObject));
+        return data==undefined; 
     }
 }
 

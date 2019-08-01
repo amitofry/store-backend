@@ -26,5 +26,13 @@ app.post('/LoginUser', function(req, res) {
     }); 
 });
 
+app.post('/SignupUser', function(req, res) {
+    const userDetails = req.body;
+    
+    res.send({
+        isSignedUp: loginManager.signUp(userDetails.userName, userDetails.password, userDetails.passwordRetype)
+    }); 
+});
+
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
