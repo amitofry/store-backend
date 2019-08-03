@@ -18,7 +18,8 @@ class LoginManager {
         //check if he is logged in already
         db.users[db.users.length] = {
             userName,
-            password
+            password,
+            favorites : []
         }
         this.dbManager.writeDataObjectToDatabase(db)
 

@@ -23,9 +23,10 @@ app.get('/', (req, res) => res.send('Hello World!'))
 app.post('/LoginUser', function(req, res) {
     const userDetails = req.body;
     
-    res.send({
+    res.json({
+        userName: userDetails.userName,
         isLoggedIn: loginManager.logIn(userDetails.userName, userDetails.password)
-    }); 
+    });  
 });
 
 app.post('/SignupUser', function(req, res) {
@@ -37,9 +38,24 @@ app.post('/SignupUser', function(req, res) {
 });
 
 app.get('/GetProducts', function(req, res) {
-    // const products = JSON.parse('{ "name":"John", "age":30, "city":"New York"}')
     const products = productsManager.getProducts();
     res.json(products)
+});
+
+app.post('/AddProductToFavorites', function(req, res) {
+    const product = req.body.product;
+    const userName = req.body.userName
+    
+    res.send({
+        isAddedToFavorites: productsManager.addToFavorites(product, userName)
+    }); 
+});
+
+
+app.get('/getUserFavorites/:userName', function(req, res) {
+    const favorites = productsManager.getUserFavorites(req.params.userName)
+    
+    res.json(favorites)
 });
 
 
