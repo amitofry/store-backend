@@ -19,7 +19,8 @@ class LoginManager {
         db.users[db.users.length] = {
             userName,
             password,
-            favorites : []
+            favorites : [],
+            cart : []
         }
         this.dbManager.writeDataObjectToDatabase(db)
 

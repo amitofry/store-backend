@@ -33,6 +33,7 @@ app.post('/SignupUser', function(req, res) {
     const userDetails = req.body;
     
     res.send({
+        userName: userDetails.userName,
         isSignedUp: loginManager.signUp(userDetails.userName, userDetails.password, userDetails.passwordRetype)
     }); 
 });
@@ -51,11 +52,34 @@ app.post('/AddProductToFavorites', function(req, res) {
     }); 
 });
 
+app.post('/AddProductToCart', function(req, res) {
+    const product = req.body.product;
+    const userName = req.body.userName
+    
+    res.send({
+        isAddedToCart: productsManager.addToCart(product, userName)
+    }); 
+});
+
 
 app.get('/getUserFavorites/:userName', function(req, res) {
     const favorites = productsManager.getUserFavorites(req.params.userName)
     
     res.json(favorites)
+});
+
+app.get('/getUserCart/:userName', function(req, res) {
+    const cart = productsManager.getUserCart(req.params.userName)
+    
+    res.json(cart)
+});
+
+app.post('/purchaseCart/:userName', function(req, res) {
+    const userName = req.params.userName
+    
+    res.send({
+        isCartPurchased: productsManager.purchaseCart(userName)
+    }); 
 });
 
 

@@ -30,6 +30,26 @@ class ProductsManager {
         return true; 
     }
 
+    addToCart(productName,userName){
+        let db = this.dbManager.getDatabaseObject();
+
+        for (var i = 0; i < db.users.length; i++){
+            
+            if (db.users[i].userName == userName){
+                const productToAdd = db.users[i].cart.find((product)=>{
+                    return product === productName;
+                })
+                if (productToAdd===undefined)
+                {
+                    db.users[i].cart[db.users[i].cart.length] = productName;
+                }
+            }
+          }
+        this.dbManager.writeDataObjectToDatabase(db)
+
+        return true; 
+    }
+
     getUserFavorites(userName)
     {
         let db = this.dbManager.getDatabaseObject();
@@ -40,6 +60,33 @@ class ProductsManager {
                     return db.users[i].favorites
             }
           }
+    }
+
+    getUserCart(userName)
+    {
+        let db = this.dbManager.getDatabaseObject();
+
+        for (var i = 0; i < db.users.length; i++){
+            
+            if (db.users[i].userName == userName){
+                    return db.users[i].cart
+            }
+          }
+    }
+
+    purchaseCart(userName)
+    {
+        let db = this.dbManager.getDatabaseObject();
+
+        for (var i = 0; i < db.users.length; i++){
+            
+            if (db.users[i].userName == userName){
+                db.users[i].cart = []
+            }
+          }
+        this.dbManager.writeDataObjectToDatabase(db)
+
+        return true;
     }
 }
 
