@@ -27,10 +27,27 @@ class LoginManager {
         return true;
 
     }
+
+    getUsers(){
+        let db = this.dbManager.getDatabaseObject();
+        
+        return db.users;
+    }
     
-    deleteUser() {        
-        // delete user from db
-        // return true or false if error.
+    deleteUser(userObj) {
+        let db = this.dbManager.getDatabaseObject();
+
+        let indexUser = db.users.findIndex(user => user.userName === userObj.userName)
+        
+        db.users.splice(indexUser, 1)
+        this.dbManager.writeDataObjectToDatabase(db)
+
+        return (
+            {
+                users : db.users,
+                isUserDeleted :true
+            }
+        )
     }
 }
 

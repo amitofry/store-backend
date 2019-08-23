@@ -38,6 +38,17 @@ app.post('/SignupUser', function(req, res) {
     }); 
 });
 
+app.post('/DeleteUser', function(req, res) {
+    const userName = req.body;
+
+    let response = loginManager.deleteUser(userName);
+    
+    res.send({
+        users: response.users,
+        isUserDeleted: response.isUserDeleted
+    }); 
+});
+
 app.get('/GetProducts', function(req, res) {
     const products = productsManager.getProducts();
     res.json(products)
@@ -80,6 +91,12 @@ app.post('/purchaseCart/:userName', function(req, res) {
     res.send({
         isCartPurchased: productsManager.purchaseCart(userName)
     }); 
+});
+
+app.get('/getUsers', function(req, res) {
+    const users = loginManager.getUsers()
+    
+    res.json(users)
 });
 
 
