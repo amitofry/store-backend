@@ -16,6 +16,15 @@ class LoginManager {
     signUp(userName, password, passwordRetype) {
         let db = this.dbManager.getDatabaseObject();
         //check if he is logged in already
+        const loggedUser = db.users.find((user)=>{
+            return user.userName === userName;
+        })
+
+        if(loggedUser !== undefined)
+        {
+            return false;
+        }
+
         db.users[db.users.length] = {
             userName,
             password,
